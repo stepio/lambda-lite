@@ -12,6 +12,9 @@ import static java.util.Collections.emptyList;
 
 public class Query {
 
+    private Query() {
+    }
+
     public static List<String> list(AwsProxyRequest request, String name) {
         validate(request);
         return request.getMultiValueQueryStringParameters().getOrDefault(name, emptyList());

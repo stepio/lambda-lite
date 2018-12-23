@@ -27,7 +27,7 @@ import static org.stepio.aws.lambda.util.StringUtils.isEmpty;
 
 public abstract class AbstractLambdaHandler implements RequestStreamHandler {
 
-    protected final Logger LOG = LoggerFactory.getLogger(getClass());
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     protected ObjectMapper objectMapper;
     protected ConcurrentMap<Class<?>, ObjectReader> readers;
@@ -65,7 +65,7 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
     protected AwsProxyResponse handleRequest(AwsProxyRequest request, Context context) {
         try {
             if (isEmpty(request.getHttpMethod())) {
-                LOG.warn("HTTP method is not recognized");
+                log.warn("HTTP method is not recognized");
                 return methodNotAllowed();
             }
             switch (request.getHttpMethod().toUpperCase()) {
@@ -78,17 +78,17 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
                 case PUT:
                     return doPut(request, context);
                 default:
-                    LOG.warn("No specific handler for {} request", request.getHttpMethod());
+                    log.warn("No specific handler for {} request", request.getHttpMethod());
                     return methodNotAllowed();
             }
         } catch (IllegalArgumentException ex) {
-            LOG.error("Failed to process an AWS request as it's incorrect", ex);
+            log.error("Failed to process an AWS request as it's incorrect", ex);
             return badRequest();
         } catch (UnsupportedOperationException ex) {
-            LOG.error("Failed to process an AWS request as it's handler is not implemented", ex);
+            log.error("Failed to process an AWS request as it's handler is not implemented", ex);
             return methodNotAllowed();
         } catch (RuntimeException ex) {
-            LOG.error("Failed to process an AWS request due to unexpected error", ex);
+            log.error("Failed to process an AWS request due to unexpected error", ex);
             return internalServerError();
         }
     }

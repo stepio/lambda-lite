@@ -1,13 +1,14 @@
 package org.stepio.aws.lambda.util;
 
-import java.util.Objects;
-
 import static java.lang.String.format;
 
 /**
  * Implements basic validations, similar to {@link org.springframework.util.Assert}.
  */
 public class Assert {
+
+    private Assert() {
+    }
 
     public static void notNull(Object value, String comment, Object... params) {
         if (value == null) {

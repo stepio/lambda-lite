@@ -9,6 +9,9 @@ import static java.util.Objects.requireNonNull;
 
 public class Responses {
 
+    private Responses() {
+    }
+
     public static AwsProxyResponse ok(String body) {
         return response(Response.Status.OK.getStatusCode(), null, body);
     }

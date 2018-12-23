@@ -24,9 +24,9 @@ public class DefaultLambdaHandler<B, R> extends AbstractLambdaHandler {
 
     public DefaultLambdaHandler() {
         Type[] array = genericTypes();
-        if (array != null) {
+        if (array.length >= 2) {
             this.bodyClass = (Class<B>) array[0];
-            this.responseClass = (Class<R>) array[1];;
+            this.responseClass = (Class<R>) array[1];
         }
     }
 
@@ -122,11 +122,11 @@ public class DefaultLambdaHandler<B, R> extends AbstractLambdaHandler {
     protected Type[] genericTypes() {
         Type type = getClass().getGenericSuperclass();
         if (!(type instanceof ParameterizedType)) {
-            return null;
+            return new Type[0];
         }
         Type[] array = ((ParameterizedType) type).getActualTypeArguments();
         if (array == null || array.length < 2) {
-            return null;
+            return new Type[0];
         }
         return array;
     }
