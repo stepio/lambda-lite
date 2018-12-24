@@ -17,8 +17,8 @@
     </licenses>
 
     <modules>
-        <module>aws-lambda-lite-dependencies</module>
         <module>aws-lambda-lite-core</module>
+        <module>aws-lambda-lite-parent</module>
     </modules>
 
 </project>
