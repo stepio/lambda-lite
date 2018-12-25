@@ -1,14 +1,14 @@
 package org.stepio.aws.lambda.util;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
-import com.amazonaws.serverless.proxy.model.MultiValuedTreeMap;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import org.junit.Test;
 
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-import static javax.ws.rs.core.Response.Status.CREATED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.stepio.aws.lambda.enums.Status.CREATED;
 
 public class ResponsesTest {
 
@@ -50,30 +50,30 @@ public class ResponsesTest {
 
     @Test
     public void status_withStatus() {
-        AwsProxyResponse response = Responses.status(CREATED);
+        APIGatewayProxyResponseEvent response = Responses.status(CREATED);
         assertThat(response.getStatusCode()).isEqualTo(201);
         assertThat(response.getBody()).isNull();
     }
 
     @Test
     public void status_withStatusCode() {
-        AwsProxyResponse response = Responses.status(201);
+        APIGatewayProxyResponseEvent response = Responses.status(201);
         assertThat(response.getStatusCode()).isEqualTo(201);
         assertThat(response.getBody()).isNull();
     }
 
     @Test
     public void response_custom() {
-        MultiValuedTreeMap<String, String> headers = new MultiValuedTreeMap<>();
-        headers.add("Content-Type", "text/html;charset=UTF-8");
-        headers.add("Content-Encoding", "gzip");
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "text/html;charset=UTF-8");
+        headers.put("Content-Encoding", "gzip");
         String body = "dummy response body";
-        AwsProxyResponse response = Responses.response(409, headers, body);
+        APIGatewayProxyResponseEvent response = Responses.response(409, headers, body);
         assertThat(response.getStatusCode()).isEqualTo(409);
-        assertThat(response.getMultiValueHeaders())
+        assertThat(response.getHeaders())
                 .contains(
-                        entry("Content-Type", Collections.singletonList("text/html;charset=UTF-8")),
-                        entry("Content-Encoding", Collections.singletonList("gzip"))
+                        entry("Content-Type", "text/html;charset=UTF-8"),
+                        entry("Content-Encoding", "gzip")
                 );
         assertThat(response.getBody()).isEqualTo(body);
     }

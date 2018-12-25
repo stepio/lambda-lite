@@ -1,15 +1,21 @@
-package org.stepio.aws.lambda;
+package org.stepio.aws.lambda.json;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
-import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
-import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.stepio.aws.lambda.LambdaHandler;
+import org.stepio.aws.lambda.RequestContext;
+import org.stepio.aws.lambda.enums.Method;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 
 import static org.stepio.aws.lambda.util.Assert.message;
 import static org.stepio.aws.lambda.util.Assert.notNull;
@@ -17,10 +23,14 @@ import static org.stepio.aws.lambda.util.Responses.noContent;
 import static org.stepio.aws.lambda.util.Responses.ok;
 import static org.stepio.aws.lambda.util.StringUtils.isEmpty;
 
-public class DefaultLambdaHandler<B, R> extends AbstractLambdaHandler {
+public class DefaultLambdaHandler<B, R> extends LambdaHandler {
 
     protected Class<B> bodyClass;
     protected Class<R> responseClass;
+
+    protected ObjectMapper objectMapper;
+    protected ConcurrentMap<Class<?>, ObjectReader> readers;
+    protected ConcurrentMap<Class<?>, ObjectWriter> writers;
 
     public DefaultLambdaHandler() {
         Type[] array = genericTypes();
@@ -28,64 +38,43 @@ public class DefaultLambdaHandler<B, R> extends AbstractLambdaHandler {
             this.bodyClass = (Class<B>) array[0];
             this.responseClass = (Class<R>) array[1];
         }
+        setObjectMapper(new ObjectMapper());
     }
 
     public DefaultLambdaHandler(Class<B> bodyClass, Class<R> responseClass) {
         this.bodyClass = bodyClass;
         this.responseClass = responseClass;
+        setObjectMapper(new ObjectMapper());
     }
 
-    @Override
-    protected AwsProxyResponse doGet(AwsProxyRequest request, Context context) {
-        return wrap(
-                doGetImpl(request, context)
-        );
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+        this.readers = new ConcurrentHashMap<>();
+        this.writers = new ConcurrentHashMap<>();
     }
 
-    @Override
-    protected AwsProxyResponse doPost(AwsProxyRequest request, Context context) {
-        return wrap(
-                doPostImpl(
-                        body(request), request, context
-                )
-        );
+    protected ObjectReader reader(Class<?> type) {
+        return this.readers.computeIfAbsent(type, this.objectMapper::readerFor);
     }
 
-    @Override
-    protected AwsProxyResponse doPut(AwsProxyRequest request, Context context) {
-        return wrap(
-                doPutImpl(
-                        body(request), request, context
-                )
-        );
+    protected ObjectWriter writer(Class<?> type) {
+        return this.writers.computeIfAbsent(type, this.objectMapper::writerFor);
     }
 
-    @Override
-    protected AwsProxyResponse doDelete(AwsProxyRequest request, Context context) {
-        return wrap(
-                doDeleteImpl(
-                        body(request), request, context
-                )
-        );
+    public void registerCustom(Method method, Function<BodyRequestContext<B>, R> customHandler) {
+        Function<RequestContext, APIGatewayProxyResponseEvent> handler = requestContext -> {
+            BodyRequestContext<B> bodyRequestContext = new BodyRequestContext<>(
+                    body(requestContext.getRequest()),
+                    requestContext.getRequest(),
+                    requestContext.getContext()
+            );
+            R response = customHandler.apply(bodyRequestContext);
+            return wrap(response);
+        };
+        register(method, handler);
     }
 
-    protected R doGetImpl(AwsProxyRequest request, Context context) {
-        throw new UnsupportedOperationException("GET is not supported");
-    }
-
-    protected R doPostImpl(B body, AwsProxyRequest request, Context context) {
-        throw new UnsupportedOperationException("POST is not supported");
-    }
-
-    protected R doPutImpl(B body, AwsProxyRequest request, Context context) {
-        throw new UnsupportedOperationException("PUT is not supported");
-    }
-
-    protected R doDeleteImpl(B body, AwsProxyRequest request, Context context) {
-        throw new UnsupportedOperationException("DELETE is not supported");
-    }
-
-    protected B body(AwsProxyRequest request) {
+    protected B body(APIGatewayProxyRequestEvent request) {
         String bodyText = request.getBody();
         if (isEmpty(bodyText)) {
             return null;
@@ -102,7 +91,7 @@ public class DefaultLambdaHandler<B, R> extends AbstractLambdaHandler {
         }
     }
 
-    protected AwsProxyResponse wrap(R response) {
+    protected APIGatewayProxyResponseEvent wrap(R response) {
         if (isEmpty(response)) {
             return noContent();
         }
