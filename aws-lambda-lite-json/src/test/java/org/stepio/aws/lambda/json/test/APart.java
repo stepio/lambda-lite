@@ -1,4 +1,4 @@
-package org.stepio.aws.lambda.test;
+package org.stepio.aws.lambda.json.test;
 
 public class APart {
 

@@ -1,14 +1,16 @@
 package org.stepio.aws.lambda.util;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
-import com.amazonaws.serverless.proxy.model.MultiValuedTreeMap;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -20,7 +22,7 @@ public class QueryTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Request cannot be null");
 
-        assertThat(Query.list(request(), "dummy")).isEqualTo(Collections.singletonList("value42"));
+        assertThat(Query.list(request(), "dummy")).isEqualTo(singletonList("value42"));
 
         List<String> list = new ArrayList<>();
         list.add("first");
@@ -66,17 +68,17 @@ public class QueryTest {
 
     @Test
     public void validate_withDummy() {
-        Query.validate(new AwsProxyRequest());
+        Query.validate(new APIGatewayProxyRequestEvent());
         assertThatThrownBy(() -> Query.validate(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Request cannot be null");
     }
 
-    private AwsProxyRequest request() {
-        AwsProxyRequest request = new AwsProxyRequest();
-        MultiValuedTreeMap<String, String> query = new MultiValuedTreeMap<>();
-        query.add("dummy", "value42");
-        query.addAll("param", "first", "second");
+    private APIGatewayProxyRequestEvent request() {
+        APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent();
+        Map<String, List<String>> query = new HashMap<>();
+        query.put("dummy", singletonList("value42"));
+        query.put("param", asList("first", "second"));
         request.setMultiValueQueryStringParameters(query);
         return request;
     }
