@@ -20,6 +20,14 @@
         </license>
     </licenses>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.stepio.aws</groupId>
+            <artifactId>aws-lambda-lite-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

@@ -16,10 +16,6 @@
         </license>
     </licenses>
 
-    <properties>
-        <dependency-check.version>4.0.1</dependency-check.version>
-    </properties>
-
     <modules>
         <module>aws-lambda-lite-dependencies</module>
         <module>aws-lambda-lite-test</module>
@@ -27,30 +23,5 @@
         <module>aws-lambda-lite-json</module>
         <module>aws-lambda-lite-parent</module>
     </modules>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.owasp</groupId>
-                    <artifactId>dependency-check-maven</artifactId>
-                    <version>${dependency-check.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
