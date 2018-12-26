@@ -1,2 +1,4 @@
 language: java
 jdk: openjdk8
+before_script: mvn org.jacoco:jacoco-maven-plugin:prepare-agent
+after_script: mvn -Powasp verify && mvn sonar:sonar
