@@ -4,11 +4,9 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import org.junit.Before;
 import org.junit.Test;
-import org.stepio.aws.lambda.RequestContext;
 import org.stepio.aws.lambda.json.test.ABody;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 public class BodyRequestContextTest {
