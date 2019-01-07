@@ -123,7 +123,7 @@ public class LambdaHandlerTest {
     public void handleRequest_ok() {
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("GET")
-                .withQueryStringParamters(singletonMap("dummyParam", "dummyValue"));
+                .withQueryStringParameters(singletonMap("dummyParam", "dummyValue"));
         response = handler.handleRequest(request, this.context);
         assertThat(response)
                 .hasFieldOrPropertyWithValue("statusCode", 200)
