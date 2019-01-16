@@ -5,12 +5,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.stepio.aws</groupId>
-        <artifactId>aws-lambda-lite-dependencies</artifactId>
+        <groupId>io.github.stepio.lambda</groupId>
+        <artifactId>lambda-lite-dependencies</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../aws-lambda-lite-dependencies</relativePath>
+        <relativePath>../lambda-lite-dependencies</relativePath>
     </parent>
-    <artifactId>aws-lambda-lite-parent</artifactId>
+    <artifactId>lambda-lite-parent</artifactId>
     <packaging>pom</packaging>
 
     <licenses>
@@ -22,8 +22,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.stepio.aws</groupId>
-            <artifactId>aws-lambda-lite-test</artifactId>
+            <groupId>io.github.stepio.lambda</groupId>
+            <artifactId>lambda-lite-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
