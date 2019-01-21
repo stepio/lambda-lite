@@ -1,7 +1,7 @@
 package io.github.stepio.lambda.util;
 
 /**
- * Implements basic validations, similar to {@link org.springframework.util.StringUtils}.
+ * Implements basic validations, similar to {@code org.springframework.util.StringUtils}.
  */
 public class StringUtils {
 

@@ -3,7 +3,7 @@ package io.github.stepio.lambda.util;
 import static java.lang.String.format;
 
 /**
- * Implements basic validations, similar to {@link org.springframework.util.Assert}.
+ * Implements basic validations, similar to {@code org.springframework.util.Assert}.
  */
 public class Assert {
 
