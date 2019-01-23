@@ -1,6 +1,7 @@
 package io.github.stepio.lambda.util;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import io.github.stepio.lambda.enums.MediaType;
 import io.github.stepio.lambda.enums.Status;
 import org.junit.Test;
 
@@ -14,8 +15,10 @@ public class ResponsesTest {
 
     @Test
     public void ok_checkStatus() {
-        assertThat(Responses.ok("dummy").getStatusCode()).isEqualTo(200);
-        assertThat(Responses.ok("dummy7").getBody()).isEqualTo("dummy7");
+        APIGatewayProxyResponseEvent responseEvent = Responses.ok(MediaType.TEXT_PLAIN, "dummy7");
+        assertThat(responseEvent.getStatusCode()).isEqualTo(200);
+        assertThat(responseEvent.getBody()).isEqualTo("dummy7");
+        assertThat(responseEvent.getHeaders()).contains(entry("Content-Type", "text/plain"));
     }
 
     @Test

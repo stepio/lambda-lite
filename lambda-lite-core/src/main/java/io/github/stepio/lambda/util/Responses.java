@@ -1,19 +1,39 @@
 package io.github.stepio.lambda.util;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import io.github.stepio.lambda.enums.MediaType;
 import io.github.stepio.lambda.enums.Status;
 
 import java.util.Map;
 
+import static java.util.Collections.singletonMap;
 import static java.util.Objects.requireNonNull;
 
 public class Responses {
 
+    private static final String HEADER_CONTENT_TYPE = "Content-Type";
+
     private Responses() {
     }
 
+    public static Map<String, String> contentTypeHeader(String mediaType) {
+        return singletonMap(HEADER_CONTENT_TYPE, mediaType);
+    }
+
     public static APIGatewayProxyResponseEvent ok(String body) {
-        return response(Status.OK.getStatusCode(), null, body);
+        return ok(MediaType.APPLICATION_JSON, body); // "application/json" is implicit default value for AWS Lambda
+    }
+
+    public static APIGatewayProxyResponseEvent ok(MediaType mediaType, String body) {
+        return ok(mediaType.getValue(), body);
+    }
+
+    public static APIGatewayProxyResponseEvent ok(String mediaType, String body) {
+        return ok(contentTypeHeader(mediaType), body);
+    }
+
+    public static APIGatewayProxyResponseEvent ok(Map<String, String> headers, String body) {
+        return response(Status.OK.getStatusCode(), headers, body);
     }
 
     public static APIGatewayProxyResponseEvent noContent() {
