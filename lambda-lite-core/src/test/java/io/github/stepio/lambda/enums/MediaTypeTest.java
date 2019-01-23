@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MediaTypeTest {
 
     @Test
-    public void getValue_someValues() {
+    public void getValueExpectStandardMediaType() {
         assertThat(MediaType.ALL.getValue()).isEqualTo("*/*");
         assertThat(MediaType.APPLICATION_JSON.getValue()).isEqualTo("application/json");
         assertThat(MediaType.TEXT_HTML.getValue()).isEqualTo("text/html");

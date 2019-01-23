@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StatusTest {
 
     @Test
-    public void of_values() {
+    public void ofWithAllValues() {
         Optional<Status> optional = Status.of(42);
         assertThat(optional.isPresent()).isFalse();
 

@@ -41,7 +41,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void constructor_generics() {
+    public void constructorWithGenerics() {
         StringLambdaHandlerExplicit stringHandlerExplicit = new StringLambdaHandlerExplicit();
         assertThat(this.stringHandler.bodyClass).isSameAs(stringHandlerExplicit.bodyClass);
         assertThat(this.stringHandler.responseClass).isSameAs(stringHandlerExplicit.responseClass);
@@ -49,7 +49,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void reader_caches() {
+    public void readerWithCaches() {
         ObjectReader reader1 = this.defaultHandler.reader(ABody.class);
         ABody body = dummy();
         ObjectReader reader2 = this.defaultHandler.reader(body.getClass());
@@ -57,7 +57,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void writer_caches() {
+    public void writerWithCaches() {
         ObjectWriter writer1 = this.defaultHandler.writer(ABody.class);
         ABody body = dummy();
         ObjectWriter writer2 = this.defaultHandler.writer(body.getClass());
@@ -65,7 +65,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void writeDummy_thenRead() throws IOException {
+    public void writeDummyThenRead() throws IOException {
         ABody body = dummy();
         String text = this.defaultHandler.writer(body.getClass())
                 .writeValueAsString(body);
@@ -75,7 +75,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void writeEmpty_thenRead() throws IOException {
+    public void writeEmptyThenRead() throws IOException {
         ABody empty = new ABody();
         ObjectReader reader = this.defaultHandler.reader(ABody.class);
         ABody other = reader.readValue("{}");
@@ -83,7 +83,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void handleRequest_GET() {
+    public void handleRequestWithGET() {
 
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("GET")
@@ -97,7 +97,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void handleRequest_POST() {
+    public void handleRequestWithPOST() {
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("POST")
                 .withBody("{\"name\":\"fail\"}");
@@ -116,7 +116,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void handleRequest_PUT() {
+    public void handleRequestWithPUT() {
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("PUT")
                 .withBody("{\"name\":\"fail\"}");
@@ -135,7 +135,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void handleRequest_DELETE() {
+    public void handleRequestWithDELETE() {
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("DELETE")
                 .withBody("{\"name\":\"fail\"}");
@@ -154,20 +154,20 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void body_empty() {
+    public void bodyWithEmpty() {
         request = new APIGatewayProxyRequestEvent();
         assertThat(this.stringHandler.body(request)).isNull();
     }
 
     @Test
-    public void body_text() {
+    public void bodyWithText() {
         request = new APIGatewayProxyRequestEvent()
                 .withBody("Request, world!");
         assertThat(this.stringHandler.body(request)).isEqualTo("Request, world!");
     }
 
     @Test
-    public void body_entity() {
+    public void bodyWithEntity() {
         assertThatThrownBy(() -> this.testHandler.body(
                 new APIGatewayProxyRequestEvent().withBody("{name:dummy}")
         )).isInstanceOf(IllegalArgumentException.class).hasMessageStartingWith("Failed to extract class");
@@ -182,7 +182,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void wrap_empty() {
+    public void wrapWithEmpty() {
         response = this.stringHandler.wrap(null);
         assertThat(response)
                 .hasFieldOrPropertyWithValue("statusCode", 204);
@@ -192,7 +192,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void wrap_text() {
+    public void wrapWithText() {
         response = this.stringHandler.wrap("Response, world!");
         assertThat(response)
                 .hasFieldOrPropertyWithValue("statusCode", 200)
@@ -200,7 +200,7 @@ public class DefaultLambdaHandlerTest {
     }
 
     @Test
-    public void wrap_entity() {
+    public void wrapWithEntity() {
         AResult result = new AResult();
         result.setValue("Joy42");
         response = this.testHandler.wrap(result);

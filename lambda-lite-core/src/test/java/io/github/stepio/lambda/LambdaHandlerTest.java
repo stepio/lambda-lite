@@ -57,7 +57,7 @@ public class LambdaHandlerTest {
     }
 
     @Test
-    public void handleRequest_badRequest() {
+    public void handleRequestWithBadRequest() {
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("GET");
         response = handler.handleRequest(request, this.context);
@@ -66,7 +66,7 @@ public class LambdaHandlerTest {
     }
 
     @Test
-    public void handleRequest_internalServerError() {
+    public void handleRequestWithInternalServerError() {
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("GET")
                 .withMultiValueQueryStringParameters(singletonMap("dummyParam", singletonList("13")));
@@ -83,7 +83,7 @@ public class LambdaHandlerTest {
     }
 
     @Test
-    public void handleRequest_methodNotAllowed() {
+    public void handleRequestWithMethodNotAllowed() {
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("PUT");
         response = this.handler.handleRequest(request, this.context);
@@ -107,7 +107,7 @@ public class LambdaHandlerTest {
     }
 
     @Test
-    public void handleRequest_noContent() {
+    public void handleRequestWithNoContent() {
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("DELETE");
         response = this.handler.handleRequest(request, this.context);
@@ -120,7 +120,7 @@ public class LambdaHandlerTest {
     }
 
     @Test
-    public void handleRequest_ok() {
+    public void handleRequestWithOk() {
         request = new APIGatewayProxyRequestEvent()
                 .withHttpMethod("GET")
                 .withQueryStringParameters(singletonMap("dummyParam", "dummyValue"));

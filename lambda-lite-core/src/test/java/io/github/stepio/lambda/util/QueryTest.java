@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class QueryTest {
 
     @Test
-    public void list_withDummy() {
+    public void listWithDummyValues() {
         assertThatThrownBy(() -> Query.query(null, "dummy"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Request cannot be null");
@@ -31,7 +31,7 @@ public class QueryTest {
     }
 
     @Test
-    public void optional_withDummy() {
+    public void optionalWithDummyValues() {
         assertThatThrownBy(() -> Query.query(null, "dummy"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Request cannot be null");
@@ -44,7 +44,7 @@ public class QueryTest {
     }
 
     @Test
-    public void required_withDummy() {
+    public void requiredWithDummyValues() {
         assertThatThrownBy(() -> Query.query(null, "dummy"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Request cannot be null");
@@ -56,7 +56,7 @@ public class QueryTest {
     }
 
     @Test
-    public void query_withDummy() {
+    public void queryWithDummyValues() {
         assertThatThrownBy(() -> Query.query(null, "dummy"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Request cannot be null");
@@ -67,7 +67,7 @@ public class QueryTest {
     }
 
     @Test
-    public void validate_withDummy() {
+    public void validateWithDummyValues() {
         Query.validate(new APIGatewayProxyRequestEvent());
         assertThatThrownBy(() -> Query.validate(null))
                 .isInstanceOf(IllegalArgumentException.class)

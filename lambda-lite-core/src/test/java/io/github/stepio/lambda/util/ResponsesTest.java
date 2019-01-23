@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.entry;
 public class ResponsesTest {
 
     @Test
-    public void ok_checkStatus() {
+    public void okCheckStatusBodyContentType() {
         APIGatewayProxyResponseEvent responseEvent = Responses.ok(MediaType.TEXT_PLAIN, "dummy7");
         assertThat(responseEvent.getStatusCode()).isEqualTo(200);
         assertThat(responseEvent.getBody()).isEqualTo("dummy7");
@@ -22,51 +22,51 @@ public class ResponsesTest {
     }
 
     @Test
-    public void noContent_checkStatus() {
+    public void noContentCheckStatusNoBody() {
         assertThat(Responses.noContent().getStatusCode()).isEqualTo(204);
         assertThat(Responses.noContent().getBody()).isNull();
     }
 
     @Test
-    public void badRequest_checkStatus() {
+    public void badRequestCheckStatusNoBody() {
         assertThat(Responses.badRequest().getStatusCode()).isEqualTo(400);
         assertThat(Responses.badRequest().getBody()).isNull();
     }
 
     @Test
-    public void notFound_checkStatus() {
+    public void notFoundCheckStatusNoBody() {
         assertThat(Responses.notFound().getStatusCode()).isEqualTo(404);
         assertThat(Responses.notFound().getBody()).isNull();
     }
 
     @Test
-    public void methodNotAllowed_checkStatus() {
+    public void methodNotAllowedCheckStatusNoBody() {
         assertThat(Responses.methodNotAllowed().getStatusCode()).isEqualTo(405);
         assertThat(Responses.methodNotAllowed().getBody()).isNull();
     }
 
     @Test
-    public void internalServerError_checkStatus() {
+    public void internalServerErrorCheckStatusNoBody() {
         assertThat(Responses.internalServerError().getStatusCode()).isEqualTo(500);
         assertThat(Responses.internalServerError().getBody()).isNull();
     }
 
     @Test
-    public void status_withStatus() {
+    public void statusWithStatus() {
         APIGatewayProxyResponseEvent response = Responses.status(Status.CREATED);
         assertThat(response.getStatusCode()).isEqualTo(201);
         assertThat(response.getBody()).isNull();
     }
 
     @Test
-    public void status_withStatusCode() {
+    public void statusWithStatusCode() {
         APIGatewayProxyResponseEvent response = Responses.status(201);
         assertThat(response.getStatusCode()).isEqualTo(201);
         assertThat(response.getBody()).isNull();
     }
 
     @Test
-    public void response_custom() {
+    public void responseWithHeaders() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "text/html;charset=UTF-8");
         headers.put("Content-Encoding", "gzip");

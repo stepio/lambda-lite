@@ -25,17 +25,17 @@ public class BodyRequestContextTest {
     }
 
     @Test
-    public void getBody_withDummy() {
+    public void getBodyWithDummy() {
         assertThat(this.requestContext.getBody()).isSameAs(this.body);
     }
 
     @Test
-    public void getRequest_withDummy() {
+    public void getRequestWithDummy() {
         assertThat(this.requestContext.getRequest()).isSameAs(this.request);
     }
 
     @Test
-    public void getContext_withDummy() {
+    public void getContextWithDummy() {
         assertThat(this.requestContext.getContext()).isSameAs(this.context);
     }
 }
