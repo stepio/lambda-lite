@@ -112,10 +112,6 @@
                         <groupId>com.amazonaws</groupId>
                         <artifactId>aws-java-sdk-dynamodb</artifactId>
                     </exclusion>
-                    <exclusion>
-                        <groupId>joda-time</groupId>
-                        <artifactId>joda-time</artifactId>
-                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
