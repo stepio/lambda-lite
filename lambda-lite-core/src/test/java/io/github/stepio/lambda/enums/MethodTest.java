@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MethodTest {
 
     @Test
-    public void of_values() {
+    public void ofWithAllValues() {
         Optional<Method> optional = Method.of("dummy");
         assertThat(optional.isPresent()).isFalse();
 

@@ -13,7 +13,7 @@ import static io.github.stepio.lambda.util.Assert.notNull;
 public class AssertTest {
 
     @Test
-    public void notNull_withDummy() {
+    public void notNullWithDummyValues() {
         notNull(Integer.valueOf(42), "Test comment");
         assertThatThrownBy(() -> notNull(null, "Instance <%s> is empty", null))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -24,7 +24,7 @@ public class AssertTest {
     }
 
     @Test
-    public void hasLength_withDummy() {
+    public void hasLengthWithDummyValues() {
         hasLength("42", "Test comment");
         assertThatThrownBy(() -> hasLength("", "Instance <%s> is empty", ""))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -32,7 +32,7 @@ public class AssertTest {
     }
 
     @Test
-    public void message_noParams() {
+    public void messageWithNoParams() {
         assertThat(message(null)).isEqualTo(null);
         assertThat(message("")).isEqualTo("");
         assertThat(message("Qwerty123")).isEqualTo("Qwerty123");
@@ -42,7 +42,7 @@ public class AssertTest {
     }
 
     @Test
-    public void message_withParams() {
+    public void messageWithParams() {
         assertThat(message("Qwerty123", "value")).isEqualTo("Qwerty123");
         assertThat(message("Text %s", "value")).isEqualTo("Text value");
         assertThat(message("Text %s %s", "value1", "value2")).isEqualTo("Text value1 value2");
