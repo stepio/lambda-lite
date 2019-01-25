@@ -3,6 +3,7 @@ package io.github.stepio.lambda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import io.github.stepio.lambda.enums.MediaType;
 import io.github.stepio.lambda.enums.Method;
 import io.github.stepio.lambda.util.Query;
 import io.github.stepio.lambda.util.Responses;
@@ -33,7 +34,7 @@ public class LambdaHandlerTest {
         this.customHandler = new LambdaHandler();
 
         this.customHandler.setDefaultHandler(requestContext -> Responses.notFound());
-        this.customHandler.setDefaultResponse(() -> Responses.ok(null));
+        this.customHandler.setDefaultResponse(() -> Responses.ok(MediaType.APPLICATION_JSON, null));
 
         this.handler.register(Method.GET, request -> {
             String value = Query.required(request.getRequest(), "dummyParam");
