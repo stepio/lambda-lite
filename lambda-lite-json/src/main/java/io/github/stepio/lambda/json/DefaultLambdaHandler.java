@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import io.github.stepio.lambda.LambdaHandler;
 import io.github.stepio.lambda.RequestContext;
+import io.github.stepio.lambda.enums.MediaType;
 import io.github.stepio.lambda.enums.Method;
 
 import java.io.IOException;
@@ -97,12 +98,12 @@ public class DefaultLambdaHandler<B, R> extends LambdaHandler {
         }
         notNull(this.responseClass, "Response class is mandatory");
         if (String.class == this.responseClass) {
-            return ok((String) response);
+            return ok(MediaType.TEXT_PLAIN, (String) response);
         }
         ObjectWriter writer = writer(this.responseClass);
         try {
             String responseText = writer.writeValueAsString(response);
-            return ok(responseText);
+            return ok(MediaType.APPLICATION_JSON_UTF8, responseText);
         } catch (JsonProcessingException ex) {
             throw new IllegalStateException(message("Failed to serialize %s", response), ex);
         }

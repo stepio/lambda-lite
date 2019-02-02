@@ -20,10 +20,6 @@ public class Responses {
         return singletonMap(HEADER_CONTENT_TYPE, mediaType);
     }
 
-    public static APIGatewayProxyResponseEvent ok(String body) {
-        return ok(MediaType.APPLICATION_JSON, body); // "application/json" is implicit default value for AWS Lambda
-    }
-
     public static APIGatewayProxyResponseEvent ok(MediaType mediaType, String body) {
         return ok(mediaType.getValue(), body);
     }
