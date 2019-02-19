@@ -38,7 +38,7 @@
         <lambda-lite.version>1.0.0-SNAPSHOT</lambda-lite.version> <!-- ${project.version} -->
         <log4j2.version>2.11.1</log4j2.version>
         <mockito.version>2.24.0</mockito.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4j.version>1.7.26</slf4j.version>
         <!-- Plugin versions -->
         <dependency-check-plugin.version>4.0.2</dependency-check-plugin.version>
         <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
