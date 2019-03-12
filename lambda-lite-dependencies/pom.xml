@@ -32,7 +32,7 @@
         <aws-dynamodb.version>1.11.438</aws-dynamodb.version>
         <aws-dynamodb-local.version>1.11.119</aws-dynamodb-local.version>
         <aws-lambda-core.version>1.2.0</aws-lambda-core.version>
-        <aws-lambda-events.version>2.2.5</aws-lambda-events.version>
+        <aws-lambda-events.version>2.2.6</aws-lambda-events.version>
         <jackson.version>2.9.8</jackson.version>
         <junit.version>4.12</junit.version>
         <lambda-lite.version>1.0.0-SNAPSHOT</lambda-lite.version> <!-- ${project.version} -->
