@@ -37,7 +37,7 @@
         <junit.version>4.12</junit.version>
         <lambda-lite.version>1.0.0-SNAPSHOT</lambda-lite.version> <!-- ${project.version} -->
         <log4j2.version>2.12.1</log4j2.version>
-        <mockito.version>3.1.0</mockito.version>
+        <mockito.version>3.2.0</mockito.version>
         <slf4j.version>1.7.29</slf4j.version>
         <!-- Plugin versions -->
         <dependency-check-plugin.version>5.2.2</dependency-check-plugin.version>
