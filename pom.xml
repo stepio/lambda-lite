@@ -23,7 +23,7 @@
 
     <properties>
         <!-- Plugin versions -->
-        <dependency-check-plugin.version>5.3.0</dependency-check-plugin.version>
+        <dependency-check-plugin.version>5.3.1</dependency-check-plugin.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
