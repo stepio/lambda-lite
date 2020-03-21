@@ -8,6 +8,4 @@
 
 Lightweight Java-based skeleton for AWS Lambda functions
 
-**Current stable release:** TBD
-
-**Development Version:** 1.0.0-SNAPSHOT
+**Update:** This project won't be supported anymore as there is a solid mature implementation of what I was looking for when I started it: [awslabs/serverless-application-model](https://github.com/awslabs/serverless-application-model)
